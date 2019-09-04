@@ -1,9 +1,17 @@
 <?php
 require_once "Conexao.php";
+
 class Categoria
 {
     public $id;
-    public $nome;       
+    public $nome;   
+    
+    public function __construct($id = false){
+        if ($id) {
+            $this->id = $id;
+            $this->carregar();
+        }
+    }
 
     public function listar()
     {
@@ -13,6 +21,12 @@ class Categoria
         $lista = $resultado->fetchAll();
         return $lista;
     }
+
+    public function atualizar(){
+        $query = "UPDATE categorias set nome = '" . $this->nome . "' WHERE id = " . $this->id;
+        $conexao = Conexao::pegarConexao();
+        $conexao->exec($query);                
+    }
     
     public function carregar()
     {
@@ -21,7 +35,7 @@ class Categoria
         $resultado = $conexao->query($query);
         $lista = $resultado->fetchAll();
         foreach ($lista as $linha) {
-            return $linha;
+            $this->nome = $linha["nome"];
         }        
     }
 
@@ -30,6 +44,12 @@ class Categoria
     {
         $query = "INSERT INTO categorias (nome) VALUES ('$this->nome')";
         $conexao = $conexao = Conexao::pegarConexao();
+        $conexao->exec($query);
+    }
+
+    public function excluir(){
+        $query =  "DELETE FROM categorias WHERE id = ". $this->id;
+        $conexao = Conexao::pegarConexao();
         $conexao->exec($query);
     }
     
