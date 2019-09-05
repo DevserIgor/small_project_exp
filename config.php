@@ -1,5 +1,6 @@
 <?php
 //configurações de banco de dados
+define("DEBUG", true);
 define("DB_DRIVE","sqlsrv");
 define("DB_HOSTNAME","(LOCAL)");
 define("DB_DATABASE","estoque");
